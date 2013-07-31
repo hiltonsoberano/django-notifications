@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 from django.utils.timezone import utc
+from django.core.exceptions import ImproperlyConfigured
 from .utils import id2slug
 
 from notifications.signals import notify
@@ -152,7 +153,7 @@ class Notification(models.Model):
 EXTRA_DATA = False
 if getattr(settings, 'NOTIFY_USE_JSONFIELD', False):
     try:
-        from jsonfield.fields import JSONField
+        from json_field import JSONField
     except ImportError:
         raise ImproperlyConfigured("You must have a suitable JSONField installed")
     
